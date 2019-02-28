@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+body {
+  text-align: end;
+  background: rgba(255, 255, 255, 0.548);
+  color: rgb(0, 0, 0);
+  font-family: 'Inconsolata', monospace;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 8px;
+}
+
+
+a {
+  color: blue;
+}
+
+a:hover {
+  color: rgba(139, 96, 3, 0.692);
+}
