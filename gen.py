@@ -1,22 +1,24 @@
+# encoding=utf8
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 import json
 import os
 from shutil import copyfile
 from collections import defaultdict
+import urllib
 
-with open('data.json') as f:
-  json_data = json.load(f)
+response = urllib.urlopen(os.environ["JSON_DATA"])
+
+# content = requests.get(os.environ["JSON_DATA"])
+json_data = json.loads(response.read())
 
 def replace_text_in_file(old_text, new_text, filename):
   if not new_text: new_text = ""
-
-  # Read in the file
   with open(filename, 'r') as file:
     filedata = file.read()
-
-  # Replace the target string
   new_file_data = filedata.replace(old_text, new_text)
-  
-  # Write the file out again
   with open(filename, 'w') as file:
     file.write(new_file_data)
 
@@ -46,7 +48,8 @@ def mark_menu_item_as_selected(filename):
 
 def generate_page_list(items):
   if not items: return ""
-  links = ["<li><a href=\"{}\">{}</a>{}</li>".format(item["link"], item["title"], ": {}".format(item["desc"]) if "desc" in item else "") for item in items]
+  links = ["<li><a href=\"{}\">{}</a>{}</li>".format(item["link"], item["title"], \
+    ": {}".format(item["desc"]) if "desc" in item else "") for item in items]
   return "<ul>{}</ul>".format("\n".join(links))
 
 
@@ -72,8 +75,3 @@ generate_html('index', defaultdict(str))
 # Main part
 for page_name, data in json_data["pages"].items():
   generate_html(page_name, data)
-
-
-
-
-
