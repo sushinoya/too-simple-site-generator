@@ -36,7 +36,7 @@ def update_generic_params(filename):
 def unpack_text_list(text_lst):
   if not isinstance(text_lst, list):
     return text_lst
-  paragraphs = [f'<p> {text} </p>' for text in text_lst]
+  paragraphs = ["<p> {} </p>".format(text) for text in text_lst]
   return '\n'.join(paragraphs) 
 
 def mark_menu_item_as_selected(filename):
