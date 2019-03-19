@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{website_title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='icon' href='favicon.ico' type='image/x-icon'>
+  <style> @import url(https://fonts.googleapis.com/css?family=Inconsolata);body{background:rgba(255,255,255,.548);color:#000;font-family:Inconsolata,monospace;font-size:15px}h1{margin-bottom:10px}ul{margin-top:8px}a{color:#43549e}a:hover{color:rgba(38,39,43,.692)}#menu{float:left;margin-top:30px;margin-left:20px;text-align:left;width:150px}#menu ul{list-style-type:none;margin:0;padding:0}#menu li a{display:inline-block;color:#43549e}#menu #selected{display:inline-block;color:#000;text-decoration:none}#top-hover{height:1px;float:left;display:block;min-width:0;overflow:hidden;width:200px;margin:0;padding:0}#content{margin-top:30px;float:left;width:500px;margin-left:20px}@media screen and (max-width:500px){#content{width:92vw;display:initial;float:right}}#content h1,#content h2,#content h3{margin-top:0}#content p,#content ul{color:#333;line-height:18px}#content li{margin-bottom:.7em}.embed-below{margin-bottom:15px} </style>
+ </head>
+<body>
+  <div id="menu">
+    <b>{menu_title}</b>
+    <ul>
+      {menu_list}
+    </ul>
+  </div>
+  <div id="top-hover"></div>
+  <div id="content">
+    <h1>{page_title}</h1>
+    {page_desc}
+    {page_list}
+    <div class="embed-below"> 
+      {text_above_embed}
+    </div>
+    {embed_content}
+  </div>
+</body>
+</html>
