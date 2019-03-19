@@ -1,0 +1,107 @@
+{
+  "pages": {
+    "about": {
+      "index": true,
+      "title": "About",
+      "description": [
+        "Paragraph 1",
+        "Paragraph 2",
+        "Paragraph 3",
+        "Paragraph 4",
+        "Paragraph 5",
+        "Paragraph 6"
+      ],
+      "text_above_embed": null,
+      "embed": null,
+      "list": null
+    },
+    "books": {
+      "index": true,
+      "title": "Books",
+      "description": "Books Page Description",
+      "text_above_embed": null,
+      "embed": null,
+      "list": [
+        {
+          "title": "Book 1",
+          "link": "Link to book 1"
+        },
+        {
+          "title": "Book 2",
+          "link": "Link to book 2"
+        }
+      ]
+    },
+    "blog": {
+      "index": true,
+      "title": "Blog",
+      "description": "Blog Page Description",
+      "text_above_embed": null,
+      "embed": null,
+      "list": null
+    },
+    "calendar": {
+      "index": true,
+      "title": "Calendar",
+      "description": "Calendar Page Description",
+      "text_above_embed": null,
+      "embed": "<iframe src=\"url_to_your_calendar\" style=\"border-width:0\" width=\"500\" height=\"600\" frameborder=\"0\" scrolling=\"no\"></iframe>",
+      "list": null
+    },
+    "movies": {
+      "index": true,
+      "title": "Movies",
+      "description": "Movies Page Description",
+      "text_above_embed": null,
+      "embed": null,
+      "list": [
+        {
+          "title": "Mulholland Drive",
+          "link": null
+        },
+        {
+          "title": "12 Angry Men",
+          "link": null
+        }
+      ]
+    },
+    "articles": {
+      "index": true,
+      "title": "Articles",
+      "description": "Articles Page Description",
+      "text_above_embed": null,
+      "embed": null,
+      "list": [
+        {
+          "title": "Why Procrastinators Procrastinate",
+          "link": "https://waitbutwhy.com/2013/10/why-procrastinators-procrastinate.html"
+        },
+        {
+          "title": "Kaleidoscope: Implementing a Language with LLVM",
+          "link": "https://llvm.org/docs/tutorial/"
+        }
+      ]
+    },
+    "resume": {
+      "index": true,
+      "title": "Resume",
+      "description": "You can download it <a href=\"url_to_your_resume\">here</a>.",
+      "text_above_embed": null,
+      "embed": "<object><iframe src=\"https://docs.google.com/gview?url=url_to_your_resume&embedded=true\" style=\"width:500px; height:700px;\" frameborder=\"0\"></iframe></object>",
+      "list": null
+    },
+    "videos": {
+      "index": true,
+      "title": "Videos",
+      "description": "Haven't videos become the most common mode of content consumption already? Here is a list of some good ones:",
+      "text_above_embed": null,
+      "embed": null,
+      "list": [
+        {
+          "title": "Tim Urban: Inside the mind of a master procrastinator",
+          "link": "https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator?language=en"
+        }
+      ]
+    }
+  }
+}
