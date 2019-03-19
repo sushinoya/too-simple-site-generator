@@ -1,4 +1,3 @@
-# encoding=utf8
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -9,9 +8,10 @@ from shutil import copyfile
 from collections import defaultdict
 import urllib
 
-response = urllib.urlopen(os.environ["JSON_DATA"])
+JSON_URL = os.environ["JSON_DATA"]
+TITLE = "Suyash Shekhar"
 
-# content = requests.get(os.environ["JSON_DATA"])
+response = urllib.urlopen(JSON_URL)
 json_data = json.loads(response.read())
 
 def replace_text_in_file(old_text, new_text, filename):
@@ -30,8 +30,8 @@ def generate_menu_list(json_data):
   return "<ul>{}</ul>".format('\n'.join(html_frag))
 
 def update_generic_params(filename):
-  replace_text_in_file("{website_title}", "Suyash Shekhar", filename)
-  replace_text_in_file("{menu_title}", "Suyash Shekhar", filename)
+  replace_text_in_file("{website_title}", TITLE, filename)
+  replace_text_in_file("{menu_title}", TITLE, filename)
   replace_text_in_file("{menu_list}", generate_menu_list(json_data), filename)
 
 
