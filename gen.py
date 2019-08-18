@@ -15,6 +15,8 @@ response = urllib.urlopen(JSON_URL)
 json_data = json.loads(response.read())
 
 def replace_text_in_file(old_text, new_text, filename):
+  if isinstance(new_text, list):
+    new_text = ''.join(new_text)
   if not new_text: new_text = ""
   with open(filename, 'r') as file:
     filedata = file.read()
