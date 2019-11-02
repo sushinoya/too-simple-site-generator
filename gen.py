@@ -9,10 +9,9 @@ from collections import defaultdict
 import urllib
 
 JSON_URL = os.environ["JSON_DATA"]
-TITLE = "Suyash Shekhar"
-
 response = urllib.urlopen(JSON_URL)
 json_data = json.loads(response.read())
+main_title = json_data.get('title', '')
 
 def replace_text_in_file(old_text, new_text, filename):
   if isinstance(new_text, list):
@@ -24,7 +23,6 @@ def replace_text_in_file(old_text, new_text, filename):
   with open(filename, 'w') as file:
     file.write(new_file_data)
 
-
 def generate_menu_list(json_data):
   pages = json_data["pages"]
   titles = sorted([ (page_name, page["title"]) for page_name, page in pages.items() if "index" in page and page["index"]])
@@ -32,8 +30,8 @@ def generate_menu_list(json_data):
   return "<ul>{}</ul>".format('\n'.join(html_frag))
 
 def update_generic_params(filename):
-  replace_text_in_file("{website_title}", TITLE, filename)
-  replace_text_in_file("{menu_title}", TITLE, filename)
+  replace_text_in_file("{website_title}", main_title, filename)
+  replace_text_in_file("{menu_title}", main_title, filename)
   replace_text_in_file("{menu_list}", generate_menu_list(json_data), filename)
 
 
@@ -70,10 +68,20 @@ def generate_html(page_name, data):
       "{page_list}", generate_page_list(data["list"]), filename)
   mark_menu_item_as_selected(filename)
 
+def fetch_and_generate_subfolder(path, folder_data):
+  if path in json_data['pages']: return
+  repo = folder_data['repo']
+  build_command = folder_data.get('build_command', '')
+  os.system("git clone {} {}".format(repo, path))
+  os.system("cd {}; {}; cd -".format(path, build_command))
 
 # Generate index.html
 generate_html('index', defaultdict(str))
 
-# Main part
+# Generate all other pages
 for page_name, data in json_data["pages"].items():
   generate_html(page_name, data)
+
+# Generate "symlinked" subfolders
+for path, data in json_data["subfolders"].items():
+  fetch_and_generate_subfolder(path, data)

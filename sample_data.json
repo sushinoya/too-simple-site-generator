@@ -1,4 +1,12 @@
-{
+{ "title": "Suyash Shekhar",
+
+  "subfolders": {
+    "oldwebsite": {
+      "repo": "https://github.com/sushinoya/sushinoya.io",
+      "build_command": "pwd"
+    }
+  },
+
   "pages": {
     "about": {
       "index": true,
