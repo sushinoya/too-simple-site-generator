@@ -72,7 +72,8 @@ def fetch_and_generate_subfolder(path, folder_data):
   if path in json_data['pages']: return
   repo = folder_data['repo']
   build_command = folder_data.get('build_command', '')
-  os.system("git clone {} {}".format(repo, path))
+  branch_flags = '--single-branch --branch ' + folder_data['branch'] if folder_data['branch'] else ''
+  os.system("git clone {} {} {}".format(branch_flags, repo, path))
   os.system("cd {}; {}; cd -".format(path, build_command))
 
 # Generate index.html
