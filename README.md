@@ -18,10 +18,10 @@ but having using both in the past, I thought going for something minimalistic wo
 
 - Clone this repository
 - Set `JSON_URL` in `gen.py` to `sample_data.json`.
-- Change `TITLE` in `gen.py` to whatever you webssite's title.
+- Change `TITLE` in `gen.py` to the title of your website.
 - Run the python script: `python gen.py`.
-- Update the `sample_data.json` to your liking.
-- Change the `favicon.ico` to whatever you like.
+- Update the `sample_data.json` with your data.
+- Change the `favicon.ico` to a different icon.
 - Push to github and use Netlify or Github Pages to host.
 
 

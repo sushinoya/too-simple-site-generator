@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!gen.py
+!favicon.ico
+!README.md
+!template.txt
+!sample_data.json
