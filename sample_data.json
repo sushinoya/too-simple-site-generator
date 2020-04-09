@@ -1,5 +1,9 @@
-{ "title": "Suyash Shekhar",
-
+{
+  "title": "Suyash Shekhar",
+  "redirects": {
+    "songs/suyash/shekhar/hoo": "https://suyash.dev",
+    "youtube": "https://youtube.com"
+  },
   "subfolders": {
     "oldwebsite": {
       "repo": "https://github.com/sushinoya/sushinoya.io",
@@ -33,7 +37,12 @@
       "list": [
         {
           "title": "Book 1",
-          "link": "Link to book 1"
+          "link": "Link to book 1",
+          "desc": "HWWWOHWOHWOHWW"
+        },
+        {
+          "title": "Book 3",
+          "desc": "Book 4"
         },
         {
           "title": "Book 2",
