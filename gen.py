@@ -58,8 +58,8 @@ def generate_page_list(items):
   texts = []
   for item in items:
     text = "<li>{}</li>"
-    if "link" in item: text = text.format("<a href=\"{}\">{}</a>").format(item["link"], item["title"])
-    text = text.format(item.get("desc", ""))
+    if "link" in item: text = text.format("<a href=\"{}\">{}</a>{}").format(item["link"], item["title"], "{}")
+    text = text.format(": " + item["desc"] if "desc" in item else "")
     texts.append(text)
   return "<ul>{}</ul>".format("\n".join(texts))
 
