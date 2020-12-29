@@ -8,6 +8,7 @@ import os
 from shutil import copyfile
 from collections import defaultdict
 import urllib
+import markdown2
 
 JSON_URL = os.environ["JSON_DATA"]
 response = urllib.urlopen(JSON_URL)
@@ -39,11 +40,11 @@ def update_generic_params(filename):
   replace_text_in_file("{menu_list}", generate_menu_list(json_data), filename)
 
 # Coverts list of text into paragraphs. Or returns string as it is.
-def unpack_text_list(text_lst):
+def unpack_text_list(text_lst, is_markdown=False):
   if not isinstance(text_lst, list):
-    return text_lst
-  paragraphs = ["<p> {} </p>".format(text) for text in text_lst]
-  return '\n'.join(paragraphs) 
+    return markdown2.markdown(text_lst, extras=['fenced-code-blocks', 'tables', 'cuddled-lists', 'strike']) if is_markdown else text_lst
+  paragraphs = ["<p> {} </p>".format(markdown2.markdown(text, extras=['fenced-code-blocks', 'tables', 'cuddled-lists', 'strike']) if is_markdown else text) for text in text_lst]
+  return '\n'.join(paragraphs)
 
 # Adds "id=selected" for the menu item
 def mark_menu_item_as_selected(filename):
@@ -91,7 +92,7 @@ def generate_html(page_name, data):
   copyfile('template.txt', filename)
   update_generic_params(filename)
   replace_text_in_file("{page_title}", data["title"], filename)
-  replace_text_in_file("{page_desc}", unpack_text_list(data["description"]), filename)
+  replace_text_in_file("{page_desc}", unpack_text_list(data["description"], is_markdown=data.get("is_markdown", False)), filename)
   replace_text_in_file("{text_above_embed}", unpack_text_list(data["text_above_embed"]), filename)
   replace_text_in_file("{embed_content}", data["embed"], filename)
   replace_text_in_file("{page_list}", generate_page_list(data["list"]), filename)
