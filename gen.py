@@ -7,6 +7,7 @@ import json
 import os
 from shutil import copyfile
 from collections import defaultdict
+from datetime import datetime
 import urllib
 import markdown2
 
@@ -30,7 +31,7 @@ def replace_text_in_file(old_text, new_text, filename):
 def generate_menu_list(json_data):
   pages = json_data["pages"]
   titles = sorted([ (page_name, page["title"]) for page_name, page in pages.items() if "index" in page and page["index"]])
-  html_frag = ["<li><a href=\"./{}.html\">{}</a></li>".format(page_name, page) for page_name, page in titles]
+  html_frag = ["<li><a href=\"/{}.html\">{}</a></li>".format(page_name, page) for page_name, page in titles]
   return "<ul>{}</ul>".format('\n'.join(html_frag))
 
 # Updates the website title, menu title and adds the side menu
@@ -40,7 +41,9 @@ def update_generic_params(filename):
   replace_text_in_file("{menu_list}", generate_menu_list(json_data), filename)
 
 # Coverts list of text into paragraphs. Or returns string as it is.
-def unpack_text_list(text_lst, is_markdown=False):
+def unpack_text_list(text_lst, is_markdown=False, is_link=False):
+  if is_link: 
+    text_lst = urllib.urlopen(text_lst).read()
   if not isinstance(text_lst, list):
     return markdown2.markdown(text_lst, extras=['fenced-code-blocks', 'tables', 'cuddled-lists', 'strike']) if is_markdown else text_lst
   paragraphs = ["<p> {} </p>".format(markdown2.markdown(text, extras=['fenced-code-blocks', 'tables', 'cuddled-lists', 'strike']) if is_markdown else text) for text in text_lst]
@@ -87,12 +90,28 @@ def generate_redirect_page(subdir, url):
   replace_text_in_file('{redirect_msg}', "You are being redirected to {}".format(url), page_name)
   replace_text_in_file('{style}', get_html_chunk("style"), page_name)
 
+def get_datetime_from_str(date_str):
+  return datetime.strptime(date_str, "%d/%m/%Y")
+
+def datetime_str_to_posted_str(date_str):
+  if not date_str:
+    return ""
+  date = get_datetime_from_str(date_str)
+  return "{}".format(datetime.strftime(date, "%d %B %Y"))
+
+def get_published_datetime_str(date_str):
+  return "Published on {}".format(datetime_str_to_posted_str(date_str)) if date_str else ""
+
 def generate_html(page_name, data):
   filename = "{}.html".format(page_name)
+  dir_name = os.path.dirname(filename)
+  if dir_name:
+    os.path.exists(dir_name) or os.makedirs(dir_name)
   copyfile('template.txt', filename)
   update_generic_params(filename)
   replace_text_in_file("{page_title}", data["title"], filename)
-  replace_text_in_file("{page_desc}", unpack_text_list(data["description"], is_markdown=data.get("is_markdown", False)), filename)
+  replace_text_in_file("{date_info}", get_published_datetime_str(data.get("date_info", "")), filename)
+  replace_text_in_file("{page_desc}", unpack_text_list(data["description"], is_markdown=data.get("is_markdown", False), is_link=data.get("is_link", False)), filename)
   replace_text_in_file("{text_above_embed}", unpack_text_list(data["text_above_embed"]), filename)
   replace_text_in_file("{embed_content}", data["embed"], filename)
   replace_text_in_file("{page_list}", generate_page_list(data["list"]), filename)
@@ -110,7 +129,18 @@ def fetch_and_generate_subfolder(path, folder_data):
 # Generate index.html
 generate_html('index', defaultdict(str))
 
-# Generate all other pages
+# Populate blog articles
+blog_articles = [{
+  "title": data["title"], 
+  "link": "/{}".format(page_name), 
+  "desc": datetime_str_to_posted_str(data["date_info"]),
+  "date": get_datetime_from_str(data["date_info"])}
+for page_name, data in json_data["pages"].items() if "date_info" in data and data.get("is_blog_post", False)]
+
+json_data["pages"]["blog"]["list"] = reversed(sorted(blog_articles, key=lambda x: x["date"]))
+
+
+# Generate all pages
 for page_name, data in json_data["pages"].items():
   generate_html(page_name, data)
 
