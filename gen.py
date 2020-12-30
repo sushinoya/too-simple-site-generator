@@ -51,7 +51,7 @@ def unpack_text_list(text_lst, is_markdown=False, is_link=False):
 
 # Adds "id=selected" for the menu item
 def mark_menu_item_as_selected(filename):
-  current_li = "href=\"./{}\">".format(filename)
+  current_li = "href=\"/{}\">".format(filename)
   replacement = current_li.replace("href=", "id=\"selected\" href=")
   replace_text_in_file(current_li, replacement, filename)
 
