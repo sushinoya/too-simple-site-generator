@@ -105,11 +105,12 @@ def get_published_datetime_str(date_str):
 def generate_html(page_name, data):
   filename = "{}.html".format(page_name)
   dir_name = os.path.dirname(filename)
-  if dir_name:
-    os.path.exists(dir_name) or os.makedirs(dir_name)
+  omit_website_title = data.get("omit_page_title", False)
+  if dir_name: os.path.exists(dir_name) or os.makedirs(dir_name)
   copyfile('template.txt', filename)
+
   update_generic_params(filename)
-  replace_text_in_file("{page_title}", data["title"], filename)
+  replace_text_in_file("{page_title}", data["title"] if not omit_website_title else '', filename)
   replace_text_in_file("{date_info}", get_published_datetime_str(data.get("date_info", "")), filename)
   replace_text_in_file("{page_desc}", unpack_text_list(data["description"], is_markdown=data.get("is_markdown", False), is_link=data.get("is_link", False)), filename)
   replace_text_in_file("{text_above_embed}", unpack_text_list(data["text_above_embed"]), filename)
